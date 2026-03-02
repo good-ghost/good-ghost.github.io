@@ -1,0 +1,9 @@
+<div class="toasts result mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-info-circle"></i>
+        {{ __.result | default: "Result" }}
+    </div>
+    <div class="content px-2 py-3">
+        {{ codes | markdownify }}
+    </div>
+</div>

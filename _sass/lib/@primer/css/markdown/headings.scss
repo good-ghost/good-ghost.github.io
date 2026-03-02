@@ -1,0 +1,72 @@
+// Needs refactoring
+// stylelint-disable selector-max-compound-selectors, selector-max-specificity
+// stylelint-disable selector-max-type
+.markdown-body {
+  // Headings
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: $spacer-4;
+    margin-bottom: $spacer-3;
+    font-weight: $font-weight-bold;
+    line-height: $lh-condensed;
+
+    .octicon-link {
+      color: $text-black;
+      vertical-align: middle;
+      visibility: hidden;
+    }
+
+    &:hover .anchor {
+      text-decoration: none;
+
+      .octicon-link {
+        visibility: visible;
+      }
+    }
+
+    tt,
+    code {
+      font-size: inherit;
+    }
+  }
+
+  h1 {
+    // stylelint-disable-next-line primer/spacing
+    padding-bottom: 0.3em;
+    // stylelint-disable-next-line primer/typography
+    font-size: $h1-size;
+    border-bottom: $border-width $border-style $border-gray-light;
+  }
+
+  h2 {
+    // stylelint-disable-next-line primer/spacing
+    padding-bottom: 0.3em;
+    // stylelint-disable-next-line primer/typography
+    font-size: $h2-size;
+    border-bottom: $border-width $border-style $border-gray-light;
+  }
+
+  h3 {
+    // stylelint-disable-next-line primer/typography
+    font-size: $h3-size;
+  }
+
+  h4 {
+    font-size: $h4-size;
+  }
+
+  h5 {
+    // stylelint-disable-next-line primer/typography
+    font-size: $h5-size;
+  }
+
+  h6 {
+    // stylelint-disable-next-line primer/typography
+    font-size: $h6-size;
+    color: $text-gray-light;
+  }
+}

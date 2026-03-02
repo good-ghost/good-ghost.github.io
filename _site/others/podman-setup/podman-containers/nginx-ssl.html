@@ -1,0 +1,244 @@
+<!DOCTYPE html> <html lang="en" dir="auto"> <head><meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=no"> <meta name="description" content="NGINX SSL 설정 기본 환경 Oracle Cloud Free-tier Ubuntu 22.04 Podman 3.4.4 Docker 대신 Cockpit 서버매니저에서 관리도구를 제공하는 Podman을 사용합니다. 웹서버 도메인 웹서버는 공식 NGINX 이미지를 ..."> <meta name="revised" content=""> <meta name="author" content=""> <meta name="generator" content="jekyll-rtd-theme v2.0.10"><meta name="theme-color" content="#2980b9"> <title>NGINX 컨테이너 SSL 설정 · 착한유령의 창고</title> <meta name="twitter:title" content="NGINX 컨테이너 SSL 설정 · 착한유령의 창고"> <meta name="twitter:description" content="NGINX SSL 설정 기본 환경 Oracle Cloud Free-tier Ubuntu 22.04 Podman 3.4.4 Docker 대신 Cockpit 서버매니저에서 관리도구를 제공하는 Podman을 사용합니다. 웹서버 도메인 웹서버는 공식 NGINX 이미지를 ..."> <meta name="twitter:card" content="summary"> <meta name="twitter:site" content="@"> <meta name="twitter:url" content="http://localhost:4000/others/podman-setup/podman-containers/nginx-ssl.html"> <meta name="twitter:creator" content="@jekyll-rtd-theme v2.0.10"> <meta property="og:title" content="NGINX 컨테이너 SSL 설정 · 착한유령의 창고"> <meta property="og:description" content="NGINX SSL 설정 기본 환경 Oracle Cloud Free-tier Ubuntu 22.04 Podman 3.4.4 Docker 대신 Cockpit 서버매니저에서 관리도구를 제공하는 Podman을 사용합니다. 웹서버 도메인 웹서버는 공식 NGINX 이미지를 ..."> <meta property="og:locale" content="en"> <meta property="og:url" content="http://localhost:4000/others/podman-setup/podman-containers/nginx-ssl.html"> <meta property="og:type" content="article"> <meta property="article:author" content=""> <meta property="article:published_time" content="2024-05-22T14:24:38+09:00"> <meta property="article:modified_time" content="2024-05-22T14:24:38+09:00"> <script type="application/ld+json"> { "@context": "https://schema.org", "@type": "Article", "mainEntityOfPage": { "@type": "WebPage", "@id": "http://localhost:4000/others/podman-setup/podman-containers/nginx-ssl.html" }, "headline": "NGINX 컨테이너 SSL 설정 · 착한유령의 창고", "image": [], "author": { "@type": "Person", "name": "" }, "datePublished": "2024-05-22T14:24:38+09:00", "dateModified": "2024-05-22T14:24:38+09:00", "publisher": { "@type": "", "name": "", "logo": { "@type": "ImageObject", "url": "" } }, "description": "NGINX SSL 설정 기본 환경 Oracle Cloud Free-tier Ubuntu 22.04 Podman 3.4.4 Docker 대신 Cockpit 서버매니저에서 관리도구를 제공하는 Podman을 사용합니다. 웹서버 도메인 웹서버는 공식 NGINX 이미지를 ..." } </script> <link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="prev" href="http://localhost:4000/others/podman-setup/podman-containers/podman-nginx.html"><link rel="canonical" href="http://localhost:4000/others/podman-setup/podman-containers/nginx-ssl.html"><link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg"><link rel="icon" type="image/png" href="/assets/images/favicon-16x16.png" sizes="16x16"> <link rel="icon" type="image/png" href="/assets/images/favicon-32x32.png" sizes="32x32"> <link rel="icon" type="image/png" href="/assets/images/favicon-96x96.png" sizes="96x96"><link rel="mask-icon" href="/assets/images/favicon.svg" color="#2980b9"><link rel="apple-touch-icon" href="/assets/images/apple-touch-icon-300x300.jpg"> <link rel="stylesheet" href="/assets/css/theme.css"><script> window.ui = { title: "착한유령의 창고", baseurl: "", i18n: { search_results: "Search Results", search_results_found: "Search finished, found # page(s) matching the search query.", search_results_not_found: "Your search did not match any documents, please make sure that all characters are spelled correctly!" } }; </script> </head> <body class="container"><div class="sidebar-wrap overflow-hidden"> <div class="sidebar height-full overflow-y-scroll overflow-x-hidden"> <div class="header d-flex flex-column p-3 text-center"> <div class="title pb-1"> <a class="f1-light no-underline py-1 px-2 rounded-1" href="/" title="각종 프로그래밍을 위한 소소한 팁을 정리하고 있습니다."> <!--i class="f0-light fa fa-home"></i--> <img src="/assets/images/cute-casper.png" height="32"/> 착한유령의 창고 </a> </div> <span class="version"></span> <form class="search pt-2" action="/search.html" method="get" autocomplete="off"> <input class="form-control input-block input-sm" type="text" name="q" placeholder="Search docs..."> </form> </div> <div class="toctree py-2" data-spy="affix" role="navigation" aria-label="main navigation"> <ul> </ul> <a class="caption d-block text-uppercase no-wrap px-2 py-0" href="/contents/"> Salesforce 관련 </a><ul> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/contents/environment/"> Visual Studio Code 개발환경 설정 </a><ul> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/environment/setup-environment/"> 개발환경 구성 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/setup-environment/install.html">1. 기본 환경 구성</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/setup-environment/coporate-environment.html">2. 기업망 방화벽 내부에서 필요한 추가 설정</a> </li></ul> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/environment/development-standard/"> 개발 표준 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/development-standard/initial-environment.html">1. 초기 환경 설정</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/development-standard/naming-rules.html">2. 명명 규칙</a> </li> <li class="toc level-3 " data-sort="3" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/development-standard/coding-standard.html">3. 코딩 표준</a> </li></ul> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/environment/version-control/"> Git 환경에서 형상관리 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/version-control/overview.html">1. 개요</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/version-control/setup-for-salesforce.html">2. Salesforce 개발을 위한 환경 설정</a> </li> <li class="toc level-3 " data-sort="3" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/environment/version-control/using-for-salesforce.html">3. Salesforce 개발을 위하여 Github를 사용하는 방법</a> </li></ul> </li></ul> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/contents/code-sample/"> Salesforce 개발 코드 샘플 </a><ul> <li class="toc level-2 " data-sort="1" data-level="2"> <a class="d-flex flex-items-baseline " href="/contents/code-sample/communication-between-independent-aura-and-lwc-component.html">1. Communication between independent lightning web component and Aura component</a> </li> <li class="toc level-2 " data-sort="2" data-level="2"> <a class="d-flex flex-items-baseline " href="/contents/code-sample/salesforce-development-lwc-how-to-communicate-between-aura-components-and-lightning-web-components-using-custom-events-and-the-api-decorator.html">2. Salesforce Development (LWC): How to Communicate between Aura Components and Lightning Web Components Using Custom Events and the Api Decorator</a> </li></ul> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/contents/interface/"> 인터페이스 프로그램 개발 </a><ul> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/interface/connectedapp/"> Connected App </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/connectedapp/create-certificate-and-privayekey.html">1. 인증서/개인키 생성 및 설정</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/connectedapp/regist-keystore.html">2. JKS 키스토어 등록</a> </li> <li class="toc level-3 " data-sort="3" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/connectedapp/setup-connected-app.html">3. Connected App 등록</a> </li></ul> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/"> Java 프로그램 개발 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/java/java-environment-for-vscode.html">1. VS Code를 위한 Java 개발환경 설정</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/java/java-config-project.html">2. Java 프로젝트 설정</a> </li> <li class="toc level-3"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/connected-app/"> Salesforce에 연결하기 </a><ul> <li class="toc level-4 " data-sort="1" data-level="4"> <a class="d-flex flex-items-baseline " href="/contents/interface/java/connected-app/java-create-claim-token.html">1. 인증 토큰 만들기</a> </li> <li class="toc level-4 " data-sort="2" data-level="4"> <a class="d-flex flex-items-baseline " href="/contents/interface/java/connected-app/java-get-access-token.html">2. access_token 발급받기</a> </li></ul> </li> <li class="toc level-3"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/"> Salesforce에서 데이터를 쿼리, 생성, 업데이트, 삭제하기 </a><ul> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/query/"> 쿼리하기 </a><ul> <li class="toc level-5 " data-sort="1" data-level="5"> <a class="d-flex flex-items-baseline " href="/contents/interface/java/data-manipulation/query/java-data-process-query-records.html">1. SOQL 쿼리하기</a> </li> <li class="toc level-5 " data-sort="2" data-level="5"> <a class="d-flex flex-items-baseline " href="/contents/interface/java/data-manipulation/query/java-data-process-batch-query.html">2. Batch 쿼리하기</a> </li></ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/query-record/"> 단일 레코드 조회 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/create-record/"> 단일 레코드 생성 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/update-record/"> 단일 레코드 업데이트 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/delete-record/"> 단일 레코드 삭제 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/create-records/"> 복수 레코드 생성 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/update-records/"> 복수 레코드 업데이트 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/java/data-manipulation/delete-records/"> 복수 레코드 삭제 </a><ul> </ul> </li></ul> </li></ul> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/"> Python 프로그램 개발 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/python/python-environment.html">1. Python 개발환경 설정</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/contents/interface/python/create-python-project.html">2. Python 프로젝트 생성</a> </li> <li class="toc level-3"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/connect-to-salesforce/"> Salesforce에 연결하기 </a><ul> <li class="toc level-4 " data-sort="1" data-level="4"> <a class="d-flex flex-items-baseline " href="/contents/interface/python/connect-to-salesforce/python-create-claim-token.html">1. 인증 토큰 만들기</a> </li> <li class="toc level-4 " data-sort="2" data-level="4"> <a class="d-flex flex-items-baseline " href="/contents/interface/python/connect-to-salesforce/python-get-access-token.html">2. access_token 발급받기</a> </li></ul> </li> <li class="toc level-3"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/"> Salesforce에서 데이터를 쿼리, 생성, 업데이트, 삭제하기 </a><ul> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/query/"> 쿼리하기 </a><ul> <li class="toc level-5 " data-sort="1" data-level="5"> <a class="d-flex flex-items-baseline " href="/contents/interface/python/data-manipulation/query/python-data-process-query-records.html">1. SOQL 쿼리하기</a> </li> <li class="toc level-5 " data-sort="2" data-level="5"> <a class="d-flex flex-items-baseline " href="/contents/interface/python/data-manipulation/query/python-data-process-batch-query.html">2. Batch 쿼리하기</a> </li></ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/query-record/"> 단일 레코드 조회 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/create-record/"> 단일 레코드 생성 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/update-record/"> 단일 레코드 업데이트 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/delete-record/"> 단일 레코드 삭제 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/create-records/"> 복수 레코드 생성 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/update-records/"> 복수 레코드 업데이트 </a><ul> </ul> </li> <li class="toc level-4"> <a class="d-flex flex-items-baseline" href="/contents/interface/python/data-manipulation/delete-records/"> 복수 레코드 삭제 </a><ul> </ul> </li></ul> </li></ul> </li></ul> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/contents/rest-api/"> Salesforce REST API </a><ul> <li class="toc level-2 " data-sort="1" data-level="2"> <a class="d-flex flex-items-baseline " href="/contents/rest-api/other-api.html">1. Org 관련 REST API</a> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/contents/rest-api/composite-api/"> Composite API </a><ul> </ul> </li></ul> </li></ul> <a class="caption d-block text-uppercase no-wrap px-2 py-0" href="/others/"> 기타 </a><ul> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/others/linux-server/"> Linux 서버 설치 및 설정 </a><ul> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/others/linux-server/install/"> Linux OS 설치 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/install/debian-install.html">1. Debian OS 설치</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/install/ubuntu-install.html">2. Ubuntu OS 설치</a> </li> <li class="toc level-3 " data-sort="3" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/install/oracle-cloud-vm-install.html">3. Oracle Cloud VM에 Ubuntu OS 설치</a> </li></ul> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/others/linux-server/config/"> Linux 서버 방화벽 설정 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/ufw-setup.html">1. UFW 방화벽 설치</a> </li> <li class="toc level-3 " data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/firewalld-setup.html">2. firewalld 방화벽 설치</a> </li> <li class="toc level-3 " data-sort="3" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/iptables-setup.html">3. iptables 방화벽 설정</a> </li> <li class="toc level-3 " data-sort="4" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/fail2ban-setup.html">4. Fail2ban 침입방지 도구 설치 및 설정</a> </li> <li class="toc level-3 " data-sort="5" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/oracle-cloud-terminal.html">5. Oracle Cloud에 웹 터미널로 접속하는 방법</a> </li> <li class="toc level-3 " data-sort="6" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/oracle-cloud-firewall.html">6. Oracle Cloud에서 UFW, firewalld 방화벽을 사용하려면</a> </li> <li class="toc level-3 " data-sort="7" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/oracle-cloud-port-open.html">7. Oracle Cloud VM의 포트 열기</a> </li> <li class="toc level-3 " data-sort="8" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/linux-server/config/google-drive.html">8. Google Drive 설정</a> </li></ul> </li></ul> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/others/cockpit-server/"> Cockpit 서버관리자 설치 및 설정 </a><ul> <li class="toc level-2 " data-sort="1" data-level="2"> <a class="d-flex flex-items-baseline " href="/others/cockpit-server/cockpit-setup.html">1. Cockpit 설치</a> </li> <li class="toc level-2 " data-sort="2" data-level="2"> <a class="d-flex flex-items-baseline " href="/others/cockpit-server/addon-install.html">2. Cockpit Addon 설치</a> </li></ul> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/others/podman-setup/"> Podman 컨테이너 관리 </a><ul> <li class="toc level-2 " data-sort="1" data-level="2"> <a class="d-flex flex-items-baseline " href="/others/podman-setup/container-service.html">1. Podman 컨테이너를 systemd 서비스로 관리</a> </li> <li class="toc level-2"> <a class="d-flex flex-items-baseline" href="/others/podman-setup/podman-containers/"> Podman 컨테이너 적재하기 </a><ul> <li class="toc level-3 " data-sort="1" data-level="3"> <a class="d-flex flex-items-baseline " href="/others/podman-setup/podman-containers/podman-nginx.html">1. PodMan NGNIX 컨테이너</a> </li> <li class="toc level-3 current" data-sort="2" data-level="3"> <a class="d-flex flex-items-baseline current" href="/others/podman-setup/podman-containers/nginx-ssl.html">2. NGINX 컨테이너 SSL 설정</a> </li></ul> </li></ul> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/others/need-to-update/"> 편집이 필요한 문서 </a><ul> <li class="toc level-2 " data-sort="1" data-level="2"> <a class="d-flex flex-items-baseline " href="/others/need-to-update/need-to-edit.html">1. 편집이 필요한 문서</a> </li></ul> </li></ul> <a class="caption d-block text-uppercase no-wrap px-2 py-0" href="/test/"> Markdown Help </a><ul> <li class="toc level-1 " data-sort="1" data-level="1"> <a class="d-flex flex-items-baseline " href="/test/sample.html">1. Sample Documents</a> </li> <li class="toc level-1"> <a class="d-flex flex-items-baseline" href="/test/contents/"> Markdown Syntax </a><ul> <li class="toc level-2 " data-sort="1" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/markdown.html">1. Markdown Elements</a> </li> <li class="toc level-2 " data-sort="2" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/toasts.html">2. Toasts Card</a> </li> <li class="toc level-2 " data-sort="3" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/codes.html">3. Code Blocks</a> </li> <li class="toc level-2 " data-sort="4" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/mermaid.html">4. Mermaid Test</a> </li> <li class="toc level-2 " data-sort="5" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/emoji.html">5. Emoji Test</a> </li> <li class="toc level-2 " data-sort="6" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/gist.html">6. Gist Test</a> </li> <li class="toc level-2 " data-sort="7" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/avatar.html">7. Avatar Test</a> </li> <li class="toc level-2 " data-sort="8" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/mentions.html">8. Mentions Test</a> </li> <li class="toc level-2 " data-sort="9" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/fonts.html">9. Fonts Test</a> </li> <li class="toc level-2 " data-sort="10" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/mathjax.html">10. Mathjax Test</a> </li> <li class="toc level-2 " data-sort="11" data-level="2"> <a class="d-flex flex-items-baseline " href="/test/contents/utilities.html">11. Primer Utilities Test</a> </li></ul> </li></ul> </div> </div> </div> <div class="content-wrap"> <div class="header d-flex flex-justify-between p-2 hide-lg hide-xl" aria-label="top navigation"> <button id="toggle" aria-label="Toggle menu" class="btn-octicon p-2 m-0 text-white" type="button"> <i class="fa fa-bars"></i> </button> <div class="title flex-1 d-flex flex-justify-center"> <a class="h4 no-underline py-1 px-2 rounded-1" href="/">착한유령의 창고</a> </div> </div> <div class="content p-3 p-sm-5"> <div class="navigation-top d-flex flex-justify-between"> <ul class="breadcrumb" role="navigation" aria-label="breadcrumbs navigation"> <li class="breadcrumb-item"> <a class="no-underline" href="/" title=""> <i class="fa fa-home"></i> </a> </li><li class="breadcrumb-item" ><a href="/Others/">Others</a></li><li class="breadcrumb-item" ><a href="/Others/Podman-setup/">Podman-setup</a></li><li class="breadcrumb-item" ><a href="/Others/Podman-setup/Podman-containers/">Podman-containers</a></li><li class="breadcrumb-item" aria-current="page">NGINX 컨테이너 SSL 설정</li></ul> </div> <hr> <div role="main" itemscope="itemscope" itemtype="https://schema.org/Article"> <div class="markdown-body" itemprop="articleBody"> <h1 id="nginx-ssl-설정">NGINX SSL 설정</h1> <h2 id="기본-환경">기본 환경</h2> <ul> <li> <p>Oracle Cloud Free-tier</p> </li> <li> <p>Ubuntu 22.04</p> </li> <li> <p>Podman 3.4.4</p> <p>Docker 대신 Cockpit 서버매니저에서 관리도구를 제공하는 Podman을 사용합니다.</p> </li> <li> <p>웹서버 도메인</p> <p>웹서버는 <a href="https://hub.docker.com/_/nginx">공식 NGINX 이미지</a>를 도커 컨테이너로 사용하여 서비스한다고 가정합니다.</p> <p>http 프로토콜을 사용하여 접속하는 웹서버의 도메인 이름. 본인이 사용하는 명칭을 적용합니다.</p> <p><code class="language-plaintext highlighter-rouge notranslate">my-domain.co.kr</code></p><div class="toasts warning mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-exclamation-circle"></i>
+        Warning
+    </div>
+    <div class="content px-2 py-3">
+        <p>iptime.org 또는 duckdns.org 같은 DDNS 서비스를 사용하는 경우 전체 도메인 이름을 사용하여야 합니다.</p>
+
+<p>예) <code class="language-plaintext highlighter-rouge">my-server.iptime.org</code>, <code class="language-plaintext highlighter-rouge">my-server.duckdns.org</code></p>
+
+    </div>
+</div>
+ </li> <li> <p>Web 컨텐츠 디렉토리</p> <p><code class="language-plaintext highlighter-rouge notranslate">/opt/web/_site</code> : 웹서버의 index.html 파일이 저장되어 있는 루트 폴더</p> </li> </ul><div class="toasts note mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-info-circle"></i>
+        Note
+    </div>
+    <div class="content px-2 py-3">
+        
+<p>Oracle Cloud에서 80 포트 열기</p>
+
+<ol>
+  <li>
+    <p>Cloud의 VM 인스턴스 VNet 설정에서 80 포트를 열어 줍니다. 이때 반드시 Source는 ‘All’로 두어야 합니다.</p>
+
+    <p><a href="/others/linux-server/oracle-cloud-port-open.html">[여기]</a>를 참조하여 포트 설정을 진행합니다.</p>
+  </li>
+  <li>
+    <p>80 포트로 웹접속이 되는지를 확인합니다. 만약 연결이 안될 경우 서버에 ssh로 접속하여 아래의 3 ~ 5 절차를 수행합니다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">iptables</code>를 사용하여 80, 443 포트를 열어 줍니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>iptables <span class="nt">-I</span> INPUT 6 <span class="nt">-m</span> state <span class="nt">--state</span> NEW <span class="nt">-p</span> tcp <span class="nt">--dport</span> 80 <span class="nt">-j</span> ACCEPT
+<span class="nv">$ </span><span class="nb">sudo </span>iptables <span class="nt">-I</span> INPUT 7 <span class="nt">-m</span> state <span class="nt">--state</span> NEW <span class="nt">-p</span> tcp <span class="nt">--dport</span> 443 <span class="nt">-j</span> ACCEPT
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>설정값을 저장합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo  </span>netfilter-persistent save
+</code></pre></div>    </div>
+
+    <p>아래와 같은 메시지를 표시하며 저장됩니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>run-parts: executing /usr/share/netfilter-persistent/plugins.d/15-ip4tables save
+run-parts: executing /usr/share/netfilter-persistent/plugins.d/25-ip6tables save
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">iptables</code> 서비스를 재시작 합니다.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl restart iptables
+<span class="nv">$ </span><span class="nb">sudo </span>service iptables restart
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+    </div>
+</div>
+ <h2 id="lets-encrypt-인증서-발급">Let's Encrypt 인증서 발급</h2> <p>정상적으로 웹서버가 80 포트에서 동작하여야 진행 할 수 있습니다.</p> <h3 id="certbot-설치">certbot 설치</h3> <ul> <li> <p>Ubuntu 패키지로 설치</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>certbot
+</code></pre>  </div> </div> </li> <li> <p>Snap 패키지 관리자로 설치</p> <p>Ubuntu 패키지로 설치할 경우 의존 패키지가 많이 설치되므로 그런것을 피할려면 Snap 패키지 관리자를 사용하면 됩니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>snap <span class="nb">install </span>core
+<span class="nv">$ </span><span class="nb">sudo </span>snap refresh core
+<span class="nv">$ </span><span class="nb">sudo </span>snap <span class="nb">install</span> <span class="nt">--classic</span> certbot
+</code></pre>  </div> </div><div class="toasts note mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-info-circle"></i>
+        Note
+    </div>
+    <div class="content px-2 py-3">
+        <p>만약 snap이 설치되지 않은 경우 아래의 명령으로 설치하면 됩니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>snapd
+</code></pre></div></div>
+
+<p>살치된 <code class="language-plaintext highlighter-rouge">snapd</code> 서비스를 활성화 해주어야 합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable</span> <span class="nt">--now</span> snapd.socket
+</code></pre></div></div>
+
+    </div>
+</div>
+ </li> </ul> <h3 id="certbot으로-인증서-발급받기">certbot으로 인증서 발급받기</h3> <p>다음의 명령을 실행합니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>certbot certonly <span class="nt">--webroot</span> <span class="nt">-w</span> /opt/web/_site
+</code></pre>  </div></div> <p>명령이 표시되는 부분에 발급자의 이메일 주소를 입력하고, 뉴스레터 수신여부(Y/N) 입력하면 인증서가 발급이 됩니다.</p> <p>발급되는 파일은 다음과 같습니다.</p> <ul> <li><code class="language-plaintext highlighter-rouge notranslate">/etc/letsencrypt/live/good-ghost.duckdns.org/fullchain.pem</code></li> <li><code class="language-plaintext highlighter-rouge notranslate">/etc/letsencrypt/live/good-ghost.duckdns.org/privkey.pem</code></li> </ul> <p>만약 오류가 발생하는 경우, 대부분의 경우에는 80 포트로 접속이 안되는 경우입니다.</p> <p><code class="language-plaintext highlighter-rouge notranslate">curl localhost:80</code> 명령으로 웹서버가 정상 동작하는지를 확인하고, 정상 동작하는 경우 <code class="language-plaintext highlighter-rouge notranslate">curl http://my-domain.co.kr:80</code> 명령으로 인터넷으로 웹서버가 정상동작하는지를 확인해봅니다.</p> <h3 id="nginx-웹서버에-ssl-적용하기">NGINX 웹서버에 SSL 적용하기</h3> <ul> <li> <p>NGINX 도커를 기본값으로 사용중이라면 먼저 컨테이너의 config 파일을 복사를 해야합니다. config를 저장하는 폴더는 <code class="language-plaintext highlighter-rouge notranslate">/opt/docker/nginx</code>라고 가정하겠습니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>docker <span class="nb">cp </span>nginx:/etc/nginx/conf.d/default.conf /opt/docker/nginx/nginx.conf
+</code></pre>  </div> </div> <p>에디터로 <code class="language-plaintext highlighter-rouge notranslate">/opt/docker/nginx/nginx.conf</code> 파일을 열고 아래의 내용을 추가합니다. 기본적으로 이 파일에는 80 포트에 대한 설정값만을 포함하고 있습니다.</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code># ... 80번 포트 설정
+server{
+
+    listen 443 ssl http2;
+    server_name my-domain.co.kr;
+
+    # SSL Certificate
+    ssl_certificate /etc/nginx/cert/fullchain.pem;
+    ssl_certificate_key /etc/nginx/cert/privkey.pem;
+
+    location / {
+        try_files $uri $uri/ =404;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+}
+</code></pre>  </div> </div><div class="toasts danger mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-exclamation-triangle"></i>
+        Danger
+    </div>
+    <div class="content px-2 py-3">
+        <p><code class="language-plaintext highlighter-rouge">443</code> 포트를 사용하는 <code class="language-plaintext highlighter-rouge">server</code> 설정에서 <code class="language-plaintext highlighter-rouge">location / {}</code>에 <code class="language-plaintext highlighter-rouge">proxy_pass localhost:80;</code>을 절대 사용하지 않습니다.</p>
+
+<p>대신 <code class="language-plaintext highlighter-rouge">try_files $uri $uri/ =404;</code>를 사용하도록 합니다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">80</code> 포트 리다이렉트를 지정하였는데, <code class="language-plaintext highlighter-rouge">443</code> 포트의 설정이 <code class="language-plaintext highlighter-rouge">proxy_pass localhost:80;</code>를 사용할 경우 리다이렉트 무한루프를 돌게 됩니다.</p>
+
+    </div>
+</div>
+ </li> <li> <p>다음의 명령으로 NGINX 도커 컨테이너를 제거합니다.</p> <p>NGINX 컨테이너 이름이 <code class="language-plaintext highlighter-rouge notranslate">myweb</code>라고 가정합니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>docker <span class="nb">rm </span>myweb
+</code></pre>  </div> </div> </li> <li> <p>아래의 명령으로 NGINX 컨테이너를 시작합니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>docker run <span class="nt">-itd</span> <span class="se">\</span>
+    <span class="nt">--name</span> myweb <span class="se">\</span>
+    <span class="nt">-p</span> 80:80 <span class="nt">-p</span> 443:443 <span class="se">\</span>
+    <span class="nt">-v</span> /opt/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro <span class="se">\</span>
+    <span class="nt">-v</span> /opt/web/_site:/usr/share/nginx/html:ro <span class="se">\</span>
+    <span class="nt">-v</span> /etc/letsencrypt/live/my-domain.co.kr/fullchain.pem:/etc/nginx/cert/fullchain.pem <span class="se">\</span>
+    <span class="nt">-v</span> /etc/letsencrypt/live/my-domain.co.kr/privkey.pem:/etc/nginx/cert/privkey.pem <span class="se">\</span>
+nginx
+</code></pre>  </div> </div> </li> <li> <p><code class="language-plaintext highlighter-rouge notranslate">https://my-domain.co.kr</code> 주소로 접속이 정상적으로 이루어지는지 확인을 합니다.</p> </li> <li> <p>만일 80 포트로 접속하는것을 허용하지 않으려면, 80 포트로 접속하는 모든 요청을 443 보안 포트로 리다이렉트하면 됩니다.</p> <p><code class="language-plaintext highlighter-rouge notranslate">/opt/docker/nginx/nginx.conf</code> 파일의 80 포트 설정 부분을 아래와 같이 수정을 합니다.</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code>server {
+
+    listen 80;
+    server_name my-domain.co.kr;
+    return 301 https://my-domain.co.kr$request_uri;
+
+}
+</code></pre>  </div> </div> <p>NGINX 도커 컨테이너를 재시작하고 <code class="language-plaintext highlighter-rouge notranslate">http://my-domain.co.kr</code> 주소로 접속하여 https:// 주소로 리다이렉트 되는지를 확인합니다.</p> </li> </ul> <h3 id="인증서-갱신하기">인증서 갱신하기</h3> <p>기본적으로 Let's Encrypt의 인증서는 90일간 유효합니다. 아래의 절차로 인증서를 갱신할 수 있습니다.</p> <ul> <li> <p>인증서 확인</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span><span class="nb">sudo </span>certbot certificates
+</code></pre>  </div> </div><div class="toasts result mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-info-circle"></i>
+        Result
+    </div>
+    <div class="content px-2 py-3">
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Saving debug log to /var/log/letsencrypt/letsencrypt.log
+    
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Found the following certs:
+   Certificate Name: my-domain.co.kr
+     Serial Number: ********************************
+     Key Type: RSA
+     Domains: my-domain.co.kr
+     Expiry Date: yyyy-MM-dd hh:mm:ss+00:00 (VALID: nn days)
+     Certificate Path: /etc/letsencrypt/live/my-domain.co.kr/fullchain.pem
+     Private Key Path: /etc/letsencrypt/live/my-domain.co.kr/privkey.pem
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</code></pre></div></div>
+
+    </div>
+</div>
+ </li> <li> <p>인증서 갱신</p> <p>인증서를 갱신할 경우엔 80 포트를 443 포트로 리다이렉트 하고 있으면 오류가 발생을 합니다. nginx.conf에서 80 포트 설정을 원상 복구하고 아래 명령을 실행을 하여야 합니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span><span class="nb">sudo </span>certbot renew <span class="nt">--dry-run</span>
+</code></pre>  </div> </div><div class="toasts result mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-info-circle"></i>
+        Result
+    </div>
+    <div class="content px-2 py-3">
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Processing /etc/letsencrypt/renewal/my-domain.co.kr.conf
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Simulating renewal of an existing certificate for my-domain.co.kr
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Congratulations, all simulated renewals succeeded:
+   /etc/letsencrypt/live/my-domain.co.kr/fullchain.pem (success)
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</code></pre></div></div>
+
+    </div>
+</div>
+ </li> <li> <p>인증서 삭제</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code> <span class="nv">$ </span><span class="nb">sudo </span>certbot delete <span class="nt">--cert-name</span> my-domain.co.kr
+</code></pre>  </div> </div> </li> <li> <p>인증서 자동 갱신</p> <p>Ubuntu에 설치된 인증서는 <code class="language-plaintext highlighter-rouge notranslate">systemd</code> 데몬에 의해 기본적으로 하루에 두번 갱신하도록 설정이 되어있습니다.</p> <p>아래의 명령으로 관련 파일을 찾아봅니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>dpkg <span class="nt">-L</span> certbot | <span class="nb">grep </span>systemd
+</code></pre>  </div> </div> <p>아래와 같이 표시됩니다.</p><div class="toasts result mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-info-circle"></i>
+        Result
+    </div>
+    <div class="content px-2 py-3">
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/lib/systemd
+/lib/systemd/system
+/lib/systemd/system/certbot.service
+/lib/systemd/system/certbot.timer
+</code></pre></div></div>
+
+    </div>
+</div>
+ <p>내용을 한번 보면…</p> <ul> <li> <p>certbot.service</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Certbot
+Documentation=file:///usr/share/doc/python-certbot-doc/html/index.html
+Documentation=https://certbot.eff.org/docs
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot -q renew
+PrivateTmp=true
+</code></pre>  </div> </div> </li> <li> <p>certbot.timer</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code>[Unit]
+Description=Run certbot twice daily
+     
+[Timer]
+OnCalendar=*-*-* 00,12:00:00
+RandomizedDelaySec=43200
+Persistent=true
+     
+[Install]
+WantedBy=timers.target
+</code></pre>  </div> </div> </li> </ul> <p>위의 설정대로라면 매일 자정 및 정오에 <code class="language-plaintext highlighter-rouge notranslate">/usr/bin/certbot -q renew</code>을 실행하여 인증서를 갱신하도록 하고 있습니다.</p> <p>인증서가 90일동안 유효하니, 갱신주기를 한달에 한번으로 바꾸어 보겠습니다.</p> <p><code class="language-plaintext highlighter-rouge notranslate">certbot.timer</code> 파일의 <code class="language-plaintext highlighter-rouge notranslate">OnCalendar</code> 부분을 다음과 같이 수정하고 저장을 합니다.</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code>OnCalendar=*-*-01 01:00:00
+</code></pre>  </div> </div> <p>위와 같이 변경을 하면 매달 1일 새벽 1시에 갱신을 실행할 것입니다.</p> </li> </ul> <h3 id="80-포트를-443-포트로-리다이렉트-하고-있는-경우-자동-갱신하기">80 포트를 443 포트로 리다이렉트 하고 있는 경우 자동 갱신하기</h3> <p>80 포트 리다이렉트를 하더라도 웹 서비스가 정상적일 경우에만 아래 사항을 적용합니다.</p> <p>80 포트 리다이렉트를 하고 있을 경우 아래와 같은 <code class="language-plaintext highlighter-rouge notranslate">systemd</code> 설정만으로는 자동 갱신이 실패하게 됩니다.</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code>ExecStart=/usr/bin/certbot -q renew
+</code></pre>  </div></div> <p>NGINX의 80 포트가 리다이렉트하지 않도록 변경을 하고 <code class="language-plaintext highlighter-rouge notranslate">certbot</code> 갱신을 실행하도록 하여야 합니다.</p> <p>먼저 <code class="language-plaintext highlighter-rouge notranslate">/opt/docker/nginx/nginx/conf</code>를 사용하여 <code class="language-plaintext highlighter-rouge notranslate">redirect.conf</code> 파일과 <code class="language-plaintext highlighter-rouge notranslate">normal.conf</code> 파일을 생성합니다.</p> <ul> <li> <p><code class="language-plaintext highlighter-rouge notranslate">redirect.conf</code> - 80 포트를 443 포트로 리다이렉트하는 config 파일</p> </li> <li> <p><code class="language-plaintext highlighter-rouge notranslate">normal.conf</code> - 80 포트를 리다이렉트하지 않는 config 파일</p> </li> </ul> <p><code class="language-plaintext highlighter-rouge notranslate">$ sudo nano /usr/bin/renew-certbot.sh</code> 명령으로 텍스트 파일을 생성을 하고 아래의 내용을 저장을 합니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="c">#! /bin/bash</span>
+
+docker stop nginx
+<span class="nb">sleep </span>1
+<span class="nb">cp</span> /opt/docker/nginx/normal.conf /opt/docker/nginx/nginx.conf
+<span class="nb">sleep </span>1
+docker start nginx
+<span class="nb">sleep </span>1
+/usr/bin/certbot <span class="nt">-q</span> renew
+<span class="nb">sleep </span>1
+docker stop nginx
+<span class="nb">sleep </span>1
+<span class="nb">cp</span> /opt/docks/nginx/redirect.conf /opt/docks/nginx/nginx.conf
+<span class="nb">sleep </span>1
+docker start nginx
+</code></pre>  </div></div> <p>각 명령어 마다 1초식 지연되도록 sleep 명령어를 추가했습니다.</p> <p>파일을 저장합니다.</p> <p>아래의 명령으로 쉘 스크립트를 실행가능한 형식으로 변경합니다.</p> <div class="language-bash highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo chmod</span> +x /usr/bin/renew-certbot.sh 
+</code></pre>  </div></div> <p>다음으로 <code class="language-plaintext highlighter-rouge notranslate">certbot.service</code> 파일의 <code class="language-plaintext highlighter-rouge notranslate">ExecStart</code> 부분을 아래와 같이 수정하고 저장을 합니다.</p> <div class="language-plaintext highlighter-rouge notranslate"><div class="highlight"><pre class="highlight"><code>ExecStart=/usr/bin/renew-certbot.sh
+</code></pre>  </div></div><div class="toasts warning mb-4">
+    <div class="title px-2 py-1">
+        <i class="fa fa-exclamation-circle"></i>
+        Warning
+    </div>
+    <div class="content px-2 py-3">
+        <p><strong>80 포트를 443 포트로 리다이렉트 하고 있는 경우 갱신하기</strong> 부분은 아직 직접 검증하지 않았습니다.</p>
+
+    </div>
+</div>
+ </div> </div> <div class="navigation-bottom d-flex flex-justify-between py-3" role="navigation" aria-label="footer navigation"> <div class="prev"><a href="/others/podman-setup/podman-containers/podman-nginx.html" class="btn" title="PodMan NGNIX 컨테이너" accesskey="p" rel="prev"> <i class="fa fa-arrow-circle-left"></i> Previous </a></div> <div class="next"></div> </div><hr> <div class="copyright text-center text-gray" role="contentinfo"> Last update :&nbsp; <span class="time">2024/02/12</span> <br/> <i class="fa fa-copyright"></i> <span class="time">2024,</span> <a class="text-gray" href="https://good-ghost.duckdns.org/" rel="noreferrer" target="_blank">good-ghost (woomg dot nate dot com)</a> </div> </div> </div> <div class="addons-wrap d-flex flex-column overflow-y-auto"> <div class="status d-flex flex-justify-between p-2"> <div class="title p-1"> <i class="fa fa-book"></i> License Notice </div> <div class="branch p-1"> <i class="fa fa-caret-down"></i> </div> </div> <div class="addons d-flex flex-column height-full p-2 d-none"> <dl> <dt>Built with <a href="https://jekyllrb.com/" rel="noreferrer" target="_blank" title="Jekyll">Jekyll</a> </dt> <dt>using a <a href="https://github.com/rundocs/jekyll-rtd-theme" rel="noreferrer" target="_blank" title="jekyll-rtd-theme v2.0.10">theme</a> provided by <a href="https://rundocs.io" rel="noreferrer" target="_blank">RunDocs</a>. </dt> <dt><br/>Theme modified by <a href="/" title="good-ghost home">good-ghost</a></dt> </dl> <hr> </div> </div> <script src="/assets/js/jquery.min.js"></script><script src="/assets/js/theme.js"></script> </body> </html>

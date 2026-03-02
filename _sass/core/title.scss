@@ -1,0 +1,13 @@
+.title {
+  // 600
+  font-family: $head-font;
+  font-weight: $font-weight-bold;
+  color: $theme-white;
+
+  a {
+    color: $theme-white;
+    &:hover {
+      background: $theme-mask-white;
+    }
+  }
+}
